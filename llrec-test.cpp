@@ -27,6 +27,16 @@ void print(Node* head);
  */
 void dealloc(Node* head);
 
+struct IsOdd {
+    bool operator()(int n) {
+        return n % 2 == 1;
+    }
+};
+struct IsEven {
+    bool operator()(int n) {
+        return n % 2 == 0;
+    }
+};
 
 Node* readList(const char* filename)
 {
@@ -42,7 +52,6 @@ Node* readList(const char* filename)
     }
     return h;
 }
-
 void print(Node* head)
 {
     while(head) {
@@ -51,7 +60,6 @@ void print(Node* head)
     }
     cout << endl;
 }
-
 void dealloc(Node* head)
 {
     Node* temp;
@@ -62,15 +70,6 @@ void dealloc(Node* head)
     }
 }
 
-// -----------------------------------------------
-//   Add any helper functions or
-//   function object struct declarations
-// -----------------------------------------------
-
-
-
-
-
 int main(int argc, char* argv[])
 {
     if(argc < 2) {
@@ -78,18 +77,20 @@ int main(int argc, char* argv[])
         return 1;
     }
 
-    // -----------------------------------------------
-    // Feel free to update any code below this point
-    // -----------------------------------------------
     Node* head = readList(argv[1]);
     cout << "Original list: ";
     print(head);
 
-    // Test out your linked list code
+    cout << "Updated list (odd): ";
+    Node* filtered = llfilter(head, IsOdd());
+    print(filtered);
+    dealloc(filtered);
 
-
-
+    cout << "Updated list (even): ";
+    filtered = llfilter(head, IsEven());
+    print(filtered);
+    dealloc(filtered);
     
+    dealloc(head);
     return 0;
-
 }
